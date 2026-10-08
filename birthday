@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Birthday Surprise — OurMoments Style</title>
+<style>
+:root{--bg:#fff9f4;--ink:#302a2b;--muted:#786d70;--accent:#e76f8f;--accent2:#8e6ac8;--paper:#fffdfb}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+button,input,textarea{font:inherit}button{cursor:pointer}
+.app{min-height:100vh;display:flex;justify-content:center;background:radial-gradient(circle at 20% 10%,#fff 0 20%,transparent 45%),linear-gradient(135deg,#fffaf5,#f7eff8)}
+.phone{width:min(100%,520px);min-height:100vh;background:var(--paper);box-shadow:0 0 50px #5b435020;overflow:hidden;position:relative}
+.top{padding:14px 18px;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+.logo{font-weight:800;color:var(--ink)}.pill{border:1px solid #eadfe0;border-radius:999px;padding:6px 10px;background:#fff}
+.screen{padding:24px 22px 34px;min-height:calc(100vh - 52px);display:flex;flex-direction:column;justify-content:center}
+.hidden{display:none!important}.eyebrow{font-size:13px;color:var(--accent);font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+h1{font-size:clamp(32px,9vw,52px);line-height:.98;margin:10px 0 14px;letter-spacing:-.04em}h2{font-size:29px;line-height:1.05;margin:8px 0 12px}p{line-height:1.55;color:var(--muted)}
+.card{background:#fff;border:1px solid #eee3e2;border-radius:28px;padding:20px;box-shadow:0 15px 35px #5b435012;margin:10px 0}
+label{font-size:13px;font-weight:800;display:block;margin:12px 0 6px}input,textarea{width:100%;border:1px solid #e8dddd;border-radius:16px;padding:13px 14px;background:#fffdfd;outline:none}textarea{min-height:130px;resize:vertical}
+.actions{display:flex;gap:10px;margin-top:18px}.btn{border:0;border-radius:999px;padding:13px 18px;font-weight:800;background:var(--ink);color:white;box-shadow:0 8px 18px #302a2b20}.btn.alt{background:#fff;color:var(--ink);border:1px solid #e8dddd;box-shadow:none}.btn:active{transform:scale(.97)}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{padding:15px;border:1px solid #eadfe0;border-radius:20px;background:white;text-align:left}.choice.selected{border:2px solid var(--accent);background:#fff4f7}
+.cake{font-size:110px;text-align:center;filter:drop-shadow(0 15px 12px #00000015);user-select:none}.candles{display:flex;justify-content:center;gap:18px;margin-top:-8px}.flame{width:12px;height:24px;border-radius:60% 60% 50% 50%;background:#ffb43b;box-shadow:0 0 18px #ffb43b;animation:flicker .35s infinite alternate}.flame.off{opacity:0;animation:none}@keyframes flicker{to{transform:translateY(-3px) scale(.92)}}
+.hero{background:linear-gradient(145deg,#fff0f5,#f5edff);border-radius:34px;padding:30px 22px;text-align:center}.hero .emoji{font-size:76px}
+.balloons{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}.balloon{height:120px;border:0;border-radius:55% 55% 48% 48%;background:linear-gradient(145deg,#f7a6ba,#d96c92);color:white;font-weight:900;box-shadow:inset -8px -12px 20px #00000012,0 12px 25px #00000012;transition:.25s}.balloon:nth-child(2){background:linear-gradient(145deg,#a994e7,#775db8)}.balloon:nth-child(3){background:linear-gradient(145deg,#f6c978,#e99d45)}.balloon:nth-child(4){background:linear-gradient(145deg,#88cfc7,#4da99e)}.balloon.pop{transform:scale(0);opacity:0}
+.reason{font-size:20px;font-weight:800;text-align:center;padding:20px}
+.photos{display:flex;gap:12px;overflow-x:auto;padding:10px 2px 16px;scroll-snap-type:x mandatory}.photo{min-width:82%;aspect-ratio:4/5;border-radius:25px;overflow:hidden;scroll-snap-align:center;background:linear-gradient(145deg,#ffe3ea,#e9ddff);display:flex;align-items:center;justify-content:center;font-size:64px}.photo img{width:100%;height:100%;object-fit:cover}
+.letter{background:#fffdf5;border:1px solid #eadfbe;border-radius:12px;padding:25px;box-shadow:0 18px 35px #4e3b2015;position:relative}.letter:before{content:"";position:absolute;inset:8px;border:1px dashed #e8d7a4;border-radius:8px;pointer-events:none}.seal{width:74px;height:74px;border-radius:50%;border:0;background:#d86679;color:#fff;font-size:28px;display:block;margin:10px auto;box-shadow:0 10px 20px #d8667933}.seal.open{transform:scale(.75) rotate(12deg);opacity:.25}
+.final{text-align:center;background:radial-gradient(circle at 50% 25%,#fff0f6,#fff 55%)}.final .big{font-size:64px;font-weight:1000;line-height:.85;letter-spacing:-.06em}.spark{position:fixed;pointer-events:none;font-size:24px;animation:rise 1.2s forwards}@keyframes rise{to{transform:translateY(-150px) rotate(25deg);opacity:0}}
+.notice{font-size:12px;color:#8a7e80;text-align:center;margin-top:15px}
+</style>
+</head>
+<body>
+<div class="app"><main class="phone">
+<div class="top"><div class="logo">✨ your birthday</div><div class="pill" id="stepLabel">Step 1 of 5</div></div>
+
+<section class="screen" id="builder">
+  <div class="eyebrow">Make it theirs ✨</div><h1>Create a birthday surprise.</h1>
+  <p>Set the names, cake, reasons, memories and letter. Then preview the exact interactive experience.</p>
+  <div class="card">
+    <label>Their name</label><input id="name" placeholder="e.g. Apoorva">
+    <label>Your name</label><input id="from" placeholder="e.g. Priya">
+    <label>Birthday letter</label><textarea id="msg" maxlength="500">Happy Birthday! I hope this year brings you lots of happiness, success, good health and beautiful memories. Keep smiling and keep being the amazing person you are. 💛</textarea>
+    <label>Reasons they are loved</label>
+    <input class="reasonInput" placeholder="Your laugh is my favourite sound">
+    <input class="reasonInput" placeholder="You make ordinary days special">
+    <input class="reasonInput" placeholder="Everything is more fun with you">
+    <input class="reasonInput" placeholder="You deserve the happiest year">
+    <label>Photos</label><input id="photos" type="file" accept="image/png,image/jpeg" multiple>
+  </div>
+  <div class="actions"><button class="btn" id="start">See the surprise ✨</button></div>
+  <div class="notice">This is a front-end recreation inspired by interactive birthday experiences.</div>
+</section>
+
+<section class="screen hidden" id="cakeStep">
+  <div class="eyebrow">Step 2 · the cake</div><h2>Pick their cake 🎂</h2><p>They'll light it, make a wish and blow the candles.</p>
+  <div class="choices">
+    <button class="choice selected" data-cake="🎂">Chocolate<br><small>Rich & dreamy</small></button>
+    <button class="choice" data-cake="🍰">Strawberry<br><small>Soft & rosy</small></button>
+    <button class="choice" data-cake="🧁">Vanilla<br><small>Warm & glowing</small></button>
+  </div>
+  <div class="actions"><button class="btn" id="cakeNext">Continue →</button></div>
+</section>
+
+<section class="screen hidden" id="recipient">
+  <div class="hero"><div class="emoji">🎁</div><div class="eyebrow">A surprise for</div><h1 id="rName">Apoorva</h1><p>Someone who loves you made this — just for you.</p><button class="btn" id="unwrap">Unwrap it ✨</button></div>
+  <p class="notice">🔊 Tap the buttons for the full magic</p>
+</section>
+
+<section class="screen hidden" id="wish">
+  <div class="hero"><div class="eyebrow">First things first 🎂</div><div class="cake" id="cake">🎂</div><div class="candles"><i class="flame"></i><i class="flame"></i><i class="flame"></i></div><h2>Make a wish, <span class="name"></span> ✨</h2><p>Tap the cake to blow out the candles.</p><button class="btn" id="blow">Tap the cake 🎂</button></div>
+</section>
+
+<section class="screen hidden" id="balloonStep">
+  <div class="eyebrow">Pop the balloons 🎈</div><h2>Each one hides a reason.</h2><p>Tap them one by one.</p><div class="balloons" id="balloons"></div><div class="actions"><button class="btn hidden" id="balloonNext">Keep going 💛</button></div>
+</section>
+
+<section class="screen hidden" id="memoryStep">
+  <div class="eyebrow">A walk down memory lane</div><h2>Swipe through 📸</h2><div class="photos" id="photoStrip"></div><p>Swipe left and right to look through the memories.</p><button class="btn" id="memoryNext">Keep going ✨</button>
+</section>
+
+<section class="screen hidden" id="letterStep">
+  <div class="eyebrow">One last thing…</div><h2>Someone wrote you a letter.</h2><div class="letter"><button class="seal" id="seal">💌</button><div id="letterBody" class="hidden"><h3>Dear <span class="name"></span>,</h3><p id="letterText"></p><p>With lots of love,<br><b id="fromText"></b> 💛</p></div></div><button class="btn" id="letterNext">Continue</button></section>
+
+<section class="screen hidden final" id="finalStep">
+  <div class="eyebrow">It’s officially your day</div><div class="big">HAPPY<br>BIRTHDAY</div><h2 class="name"></h2><p>Here’s to a year that blooms. 🌷</p><button class="btn" id="replay">Replay the surprise ↺</button>
+</section>
+</main></div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+let data={name:"Apoorva",from:"Your friend",msg:"Happy Birthday! I hope this year brings you lots of happiness, success, good health and beautiful memories.",reasons:["Your laugh is my favourite sound","You make ordinary days special","Everything is more fun with you","You deserve the happiest year"],cake:"🎂",photos:[]};
+
+function tone(freq=520,dur=.12,type="sine"){try{const c=new AudioContext(),o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(.0001,c.currentTime);g.gain.exponentialRampToValueAtTime(.07,c.currentTime+.01);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+dur+.02)}catch(e){}}
+function click(){tone(620,.08)}function pop(){tone(180,.12,"triangle");setTimeout(()=>tone(95,.1,"triangle"),40)}function magic(){tone(523,.15);setTimeout(()=>tone(659,.15),100);setTimeout(()=>tone(784,.2),200)}
+function spark(x,y){const e=document.createElement("div");e.className="spark";e.textContent=["✨","💛","🎉","💖"][Math.floor(Math.random()*4)];e.style.left=x+"px";e.style.top=y+"px";document.body.appendChild(e);setTimeout(()=>e.remove(),1200)}
+function show(id){$$(".screen").forEach(x=>x.classList.add("hidden"));$("#"+id).classList.remove("hidden");click()}
+function syncNames(){$$(".name").forEach(x=>x.textContent=data.name);$("#rName").textContent=data.name;$("#letterText").textContent=data.msg;$("#fromText").textContent=data.from}
+$("#start").onclick=async()=>{data.name=$("#name").value.trim()||"Apoorva";data.from=$("#from").value.trim()||"Your friend";data.msg=$("#msg").value.trim()||data.msg;data.reasons=$$(".reasonInput").map(x=>x.value.trim()).filter(Boolean);if(!data.reasons.length)data.reasons=["You are wonderful","You make people smile","You make ordinary days special","You deserve a beautiful year"];const files=[...($("#photos").files||[])];data.photos=[];for(const f of files.slice(0,5))data.photos.push(await new Promise(res=>{const r=new FileReader();r.onload=()=>res(r.result);r.readAsDataURL(f)}));syncNames();show("cakeStep");$("#stepLabel").textContent="Step 2 of 5";magic()}
+$$("[data-cake]").forEach(b=>b.onclick=()=>{$$("[data-cake]").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");data.cake=b.dataset.cake;click()});
+$("#cakeNext").onclick=()=>{syncNames();show("recipient");$("#stepLabel").textContent="Preview";magic()}
+$("#unwrap").onclick=()=>{show("wish");$("#stepLabel").textContent="1 / 5";magic()}
+$("#blow").onclick=e=>{click();$$(".flame").forEach(x=>x.classList.add("off"));for(let i=0;i<18;i++)setTimeout(()=>spark(innerWidth/2+(Math.random()-.5)*180,innerHeight/2),i*35);setTimeout(()=>{show("balloonStep");$("#stepLabel").textContent="2 / 5";renderBalloons()},900)}
+function renderBalloons(){const box=$("#balloons");box.innerHTML="";data.reasons.slice(0,4).forEach((r,i)=>{const b=document.createElement("button");b.className="balloon";b.textContent="🎈";b.onclick=()=>{if(b.classList.contains("pop"))return;b.classList.add("pop");pop();setTimeout(()=>{b.textContent=r;b.classList.remove("pop");b.className="balloon reason"},250);if($$(".balloon.pop").length===data.reasons.slice(0,4).length)$("#balloonNext").classList.remove("hidden")};box.appendChild(b)})}
+$("#balloonNext").onclick=()=>{show("memoryStep");$("#stepLabel").textContent="3 / 5";renderPhotos();magic()}
+function renderPhotos(){const s=$("#photoStrip");s.innerHTML="";if(!data.photos.length){["📸","🌷","🎓","🎉"].forEach(x=>{const d=document.createElement("div");d.className="photo";d.textContent=x;s.appendChild(d)})}else data.photos.forEach((src,i)=>{const d=document.createElement("div");d.className="photo";const im=document.createElement("img");im.src=src;d.appendChild(im);s.appendChild(d)})}
+$("#memoryNext").onclick=()=>{show("letterStep");$("#stepLabel").textContent="4 / 5";magic()}
+$("#seal").onclick=()=>{$("#seal").classList.add("open");$("#letterBody").classList.remove("hidden");magic();for(let i=0;i<10;i++)setTimeout(()=>spark(innerWidth/2+(Math.random()-.5)*200,innerHeight/2),i*50)}
+$("#letterNext").onclick=()=>{show("finalStep");$("#stepLabel").textContent="5 / 5";for(let i=0;i<25;i++)setTimeout(()=>spark(innerWidth/2+(Math.random()-.5)*250,innerHeight/2+(Math.random()-.5)*150),i*30);magic()}
+$("#replay").onclick=()=>{show("recipient");$("#stepLabel").textContent="Preview";magic()}
+document.addEventListener("pointerdown",e=>{if(e.target.closest("button"))return;spark(e.clientX,e.clientY)}, {passive:true});
+</script>
+</body>
+</html>
